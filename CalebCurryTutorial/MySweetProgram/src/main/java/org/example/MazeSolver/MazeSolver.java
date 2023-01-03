@@ -1,44 +1,37 @@
 package org.example.MazeSolver;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public class MazeSolver {
     //0 = wall
     //1 = path
     //2 = destination
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         ArrayList<Maze> mazes = new ArrayList<>();
+
         Maze m = new Maze();
 
-        int[][] maze = {
-                {1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0},
-                {1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0},
-                {0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1},
-                {1, 1, 1, 2, 0, 1, 0, 1, 0, 1, 0},
-                {1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0},
-                {0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1}
-        };
-        m.maze = maze;
-        m.start = new Position(4, 8);
-        m.path = new LinkedList<>();
+        //fill list from file
+        Scanner scanner = new Scanner(new File("C:\\Users\\Toma\\IDEA Projects\\CalebCurryTutorial\\MySweetProgram\\src\\main\\resources\\mazes.txt"));
+        int rows = Integer.parseInt(scanner.nextLine());
+        m.maze = new int[rows][];
 
-        Maze n = new Maze();
-        int[][] n_maze = {
-                {1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0},
-                {1, 0, 1, 1, 1, 1, 0, 0, 2, 1, 0},
-                {0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1},
-                {1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0},
-                {1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0},
-                {0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1}
-        };
-        n.maze = n_maze;
-        n.start = new Position(4, 8);
-        n.path = new LinkedList<>();
+        //loop
+        for (int i = 0; i < rows; i++) {
+            String[] items = scanner.nextLine().split(", ");
+            m.maze[i] = Arrays.stream(items).mapToInt(Integer::parseInt).toArray();
+        }
+
+        //starting point
+        m.start = new Position(Integer.parseInt(scanner.nextLine()), Integer.parseInt(scanner.nextLine()));
 
         mazes.add(m);
-        mazes.add(n);
 
         int i = 0;
         while (i < mazes.size()) {

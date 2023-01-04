@@ -5,14 +5,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.List;
 
 public class WebAnalysisApp implements WebAnalysis{
-    public void startApp() {
+    public void startApp(String url) {
         //setting up the environment
-        ChromeDriver driver = setUp("https://demowebshop.tricentis.com/");
+        ChromeDriver driver = setUp(url);
 
         //finding the anchor tags by tagName and mapping the WebElements into String by text and counting them
         List<String> anchorsText = getAnchorsText(getAnchorsElements(driver));
-        long numberOfAnchors = getNumberOfAnchors(anchorsText);
-        System.out.println("In this page, we've found " + numberOfAnchors + " anchor tags!\n");
+        System.out.println("In this page, we've found " + getNumberOfAnchors(anchorsText) + " anchor tags!\n");
         System.out.println(anchorsText + "\n");
 
         //checking if the links contains "href"

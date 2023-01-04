@@ -7,7 +7,6 @@ package org.example;
 
 public class Main {
     public static void main(String[] args) {
-        WebAnalysisApp webAnalysisApp = new WebAnalysisApp();
-        webAnalysisApp.startApp();
+        new WebAnalysisApp().startApp("https://open.spotify.com/");
     }
 }

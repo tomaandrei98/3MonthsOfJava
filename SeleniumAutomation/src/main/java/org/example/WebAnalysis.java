@@ -20,7 +20,6 @@ public interface WebAnalysis {
     }
 
     default List<String> getAnchorsText(List<WebElement> anchorsElements) {
-        //finding the anchor tags by tagName and mapping the WebElements into String by text and counting them
         return anchorsElements.stream()
                 .map(webElement -> webElement.getText().replace("\n", ""))
                 .toList();

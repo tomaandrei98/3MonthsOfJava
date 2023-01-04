@@ -12,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
@@ -24,10 +25,20 @@ public class Main {
 
         //finding the anchor tags by tagName and mapping the WebElements into String by text and counting them
         List<WebElement> anchorsElements = driver.findElements(By.tagName("a"));
-        List<String> anchorsText = anchorsElements.stream().map(WebElement::getText).collect(Collectors.toList());
+        List<String> anchorsText = anchorsElements.stream()
+                .map(webElement -> webElement.getText().replace("\n", ""))
+                .toList();
         long numberOfAnchors = anchorsText.size();
-        System.out.println("In this page, we've found " + numberOfAnchors + " anchor tags!");
-        System.out.println(anchorsText);
+        System.out.println("In this page, we've found " + numberOfAnchors + " anchor tags!\n");
+
+
+        System.out.println(anchorsText + "\n");
+
+        //checking if the links contains "href"
+        Stream<WebElement> anchorTagsWithoutHrefAttribute =
+                anchorsElements.stream().filter(element -> element.getAttribute("href") == null);
+        long numberOfAnchorTagsWithoutHrefAttribute = anchorTagsWithoutHrefAttribute.count();
+        System.out.println("There are " + numberOfAnchorTagsWithoutHrefAttribute + " broken links (doesn't contain href attribute)");
 
         //closing the chrome driver
         driver.quit();

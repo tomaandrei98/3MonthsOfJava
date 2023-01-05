@@ -26,4 +26,15 @@ public class WebAnalysisApp implements WebAnalysis{
         List<String> titles = collectTitles(links);
         System.out.println(titles);
     }
+
+    public void printBooksTitleInReverseOrder(String url) {
+        List<String> booksTitle = getBooksTitle(url);
+        boolean isOrdered = isOrdered(booksTitle);
+        if (isOrdered) {
+            System.out.println("Titles are ordered!");
+        } else {
+            System.out.println("Error");
+        }
+    }
+
 }

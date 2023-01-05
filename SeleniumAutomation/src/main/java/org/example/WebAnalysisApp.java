@@ -5,7 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.List;
 
 public class WebAnalysisApp implements WebAnalysis{
-    public void startApp(String url) {
+    public void analysisApp(String url) {
         //setting up the environment
         ChromeDriver driver = setUp(url);
 
@@ -20,5 +20,10 @@ public class WebAnalysisApp implements WebAnalysis{
 
         //closing the chrome driver
         driver.quit();
+    }
+
+    public void printTitlesApp(List<String> links) {
+        List<String> titles = collectTitles(links);
+        System.out.println(titles);
     }
 }

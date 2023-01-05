@@ -6,9 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public interface WebAnalysis {
@@ -87,5 +85,26 @@ public interface WebAnalysis {
             }
         }
         return flag;
+    }
+
+    default List<WebElement> getTitleElements(ChromeDriver driver) {
+        return driver.findElements(By.xpath("//h2//a"));
+    }
+
+    default List<WebElement> getPriceElements(ChromeDriver driver) {
+        return driver.findElements(By.xpath("//span[@class='price']"));
+    }
+
+    default Map<String, String> getMapWithTitleAndPrices(List<WebElement> titleElements, List<WebElement> priceElements) {
+        Map<String, String> productsMap = new HashMap<>();
+
+        for (int i = 0; i < titleElements.size(); i++) {
+            List<String> titleString = titleElements.stream().map(WebElement::getText).toList();
+            List<String> priceDouble = priceElements.stream().map(WebElement::getText).toList();
+
+            productsMap.put(titleString.get(i), priceDouble.get(i));
+        }
+
+        return productsMap;
     }
 }

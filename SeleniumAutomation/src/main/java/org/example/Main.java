@@ -12,16 +12,25 @@
 // 2. Enter in books section and sort the books by name in descendant order
 // 3. Collect the names of books and verify if it's sorted
 
+// Ex. 4
+// 1. Open an online library in the browser
+// 2. Collect the titles and prices in a map
+
+
 package org.example;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-//        new WebAnalysisApp().analysisApp("https://open.spotify.com/");
+        new WebAnalysisApp().analysisApp("https://open.spotify.com/");
 
-//        List<String> links = new ArrayList<>(List.of("https://www.facebook.com", "https://www.google.com", "https://www.amazon.com"));
-//        new WebAnalysisApp().printTitlesApp(links);
+        List<String> links = new ArrayList<>(List.of("https://www.facebook.com", "https://www.google.com", "https://www.amazon.com"));
+        new WebAnalysisApp().printTitlesApp(links);
 
         new WebAnalysisApp().printBooksTitleInReverseOrder("https://librariaeminescu.ro/");
 
+        new WebAnalysisApp().printTableWithBooksAndPrices("https://librariaeminescu.ro/");
     }
 }

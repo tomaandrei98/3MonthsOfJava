@@ -6,7 +6,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class WebAnalysisApp implements WebAnalysis{
     public void analysisApp(String url) {
@@ -42,7 +41,9 @@ public class WebAnalysisApp implements WebAnalysis{
 
         Map<String, String> productsMap = getMapWithTitleAndPrices(titleElements, priceElements);
 
-        productsMap.forEach((t, p) -> System.out.printf("%-60s | %-10s\n", t, p));
+        productsMap.forEach((t, p) -> System.out.printf("%-100s | %-10s\n", t, p));
+
+        driver.quit();
     }
 
 }

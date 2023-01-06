@@ -66,6 +66,8 @@ public interface WebAnalysis {
 
         List<WebElement> booksElements = driver.findElements(By.xpath("//h2//a"));
         List<String> booksTitle = booksElements.stream().map(WebElement::getText).collect(Collectors.toList());
+        driver.quit();
+
         return booksTitle;
     }
 

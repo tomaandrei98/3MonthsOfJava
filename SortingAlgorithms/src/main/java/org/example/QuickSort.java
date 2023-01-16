@@ -14,10 +14,15 @@ public class QuickSort {
         System.out.println("Before: ");
         printArray(numbers);
 
-        quicksort(numbers, 0, numbers.length - 1);
+        quicksort(numbers);
 
         System.out.println("\nAfter: ");
         printArray(numbers);
+    }
+
+
+    private static void quicksort(int[] array) {
+        quicksort(array, 0, array.length - 1);
     }
 
     private static void quicksort(int[] array, int lowIndex, int highIndex) {
@@ -26,8 +31,17 @@ public class QuickSort {
             return;
         }
 
-        int pivot = array[highIndex];
+        int pivotIndex = new Random().nextInt(highIndex - lowIndex) + lowIndex;
+        int pivot = array[pivotIndex];
+        swap(array, pivotIndex, highIndex);
 
+        int leftPointer = partition(array, lowIndex, highIndex, pivot);
+
+        quicksort(array, lowIndex, leftPointer - 1);
+        quicksort(array, leftPointer + 1, highIndex);
+    }
+
+    private static int partition(int[] array, int lowIndex, int highIndex, int pivot) {
         int leftPointer = lowIndex;
         int rightPointer = highIndex;
 
@@ -44,9 +58,7 @@ public class QuickSort {
         }
 
         swap(array, leftPointer, highIndex);
-
-        quicksort(array, lowIndex, leftPointer - 1);
-        quicksort(array, leftPointer + 1, highIndex);
+        return leftPointer;
     }
 
     private static void swap(int[] array, int index1, int index2) {

@@ -9,7 +9,7 @@ public class BubbleSort {
         int[] numbers = new int[15];
 
         for (int i = 0; i < numbers.length; i++) {
-            numbers[i] = rand.nextInt(1000000);
+            numbers[i] = rand.nextInt(100);
         }
 
         System.out.println("Before: ");
@@ -33,6 +33,24 @@ public class BubbleSort {
         System.out.println("After: ");
         printArray(numbers);
 
+        binarySearchForValue(numbers, 7);
+    }
+
+    private static void binarySearchForValue(int[] array, int value) {
+        int lowIndex = 0;
+        int highIndex = array.length - 1;
+
+        while (lowIndex <= highIndex) {
+            int middleIndex = (highIndex + lowIndex) / 2;
+            if (array[middleIndex] < value) {
+                lowIndex = middleIndex + 1;
+            } else if (array[middleIndex] > value) {
+                highIndex = middleIndex - 1;
+            } else {
+                System.out.println("Found a match for " + value + " at index " + middleIndex);
+                break;
+            }
+        }
     }
 
     private static void printArray(int[] numbers) {

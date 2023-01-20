@@ -16,7 +16,7 @@ public class PriorityQueueSort {
         System.out.println("Before: ");
         printArray(numbers);
 
-        heapSort(numbers);
+        priorityQueueSort(numbers);
 
         System.out.println("After: ");
         printArray(numbers);
@@ -26,7 +26,7 @@ public class PriorityQueueSort {
         System.out.println(Arrays.toString(numbers));
     }
 
-    public static void heapSort(int[] arr) {
+    public static void priorityQueueSort(int[] arr) {
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
 
         for (int i = 0; i < arr.length; i++) {

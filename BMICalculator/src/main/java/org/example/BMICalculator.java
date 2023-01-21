@@ -9,30 +9,27 @@ import java.util.Scanner;
 public class BMICalculator {
     static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        BMICalculatorApp();
-    }
-
-    private static void BMICalculatorApp() {
+    public void BMICalculatorApp() {
         double weight = enterNumber("Enter weight in kg: ");
         double height = enterNumber("Enter height cm: ");
         calculateBMI(weight, height);
     }
 
-    private static void calculateBMI(double weight, double height) {
+    public double calculateBMI(double weight, double height) {
         double bmi = weight / Math.pow((height/100), 2);
         printBMIResult(formatBMIResult(bmi));
+        return bmi;
     }
-    private static String formatBMIResult(double bmi) {
+    public String formatBMIResult(double bmi) {
         DecimalFormat df = new DecimalFormat("0.0");
         return df.format(bmi);
     }
 
-    private static void printBMIResult(String result) {
+    public void printBMIResult(String result) {
         System.out.println("Your BMI is: " + result);
     }
 
-    public static double enterNumber(String message) {
+    public double enterNumber(String message) {
         boolean flag = false;
         String value = "";
         double result = 0;

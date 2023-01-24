@@ -5,13 +5,13 @@ import java.util.Arrays;
 public class MedianFinder {
 
     private static double findMedianSortedArrays(int[] numbers1, int[] numbers2) {
-        int[] mergedNums = mergeArrays(numbers1, numbers2);
+        int[] mergedNumbers = mergeArrays(numbers1, numbers2);
 
-        if (mergedNums.length % 2 == 1) {
-            return mergedNums[mergedNums.length / 2];
+        if (mergedNumbers.length % 2 == 1) {
+            return mergedNumbers[mergedNumbers.length / 2];
         }
 
-        return 0.0;
+        return ((double) mergedNumbers[mergedNumbers.length / 2] + mergedNumbers[(mergedNumbers.length / 2) - 1]) / 2;
     }
 
     public static int[] mergeArrays(int[] numbers1, int[] numbers2) {

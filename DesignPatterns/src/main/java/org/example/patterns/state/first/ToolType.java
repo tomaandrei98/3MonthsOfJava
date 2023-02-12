@@ -1,4 +1,4 @@
-package org.example.patterns.state;
+package org.example.patterns.state.first;
 
 public enum ToolType {
     SELECTION,

@@ -1,29 +1,58 @@
 package main;
 
 import inputs.KeyboardInputs;
+import utils.Constants;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+
+import static utils.Constants.PlayerConstants.*;
+import static utils.Constants.Directions.*;
 
 public class GamePanel extends JPanel {
     private MouseInputs mouseInputs;
     private float xDelta = 100, yDelta = 100;
-    private float xDir = 0.3f, yDir =0.3f;
-    private int frames = 0;
-    private long lastCheck = 0;
-    private Color color = new Color(150, 20, 80);
-    private Random random;
-
+    private BufferedImage img;
+    private BufferedImage[][] animations;
+    private int animationTick, animationIndex, animationSpeed = 15;
+    private int playerAction = IDLE;
+    private int playerDirection = -1;
+    private boolean moving = false;
 
     public GamePanel() {
-        random = new Random();
         mouseInputs = new MouseInputs(this);
+
+        importImage();
+        loadAnimations();
+
         setPanelSize();
         addKeyListener(new KeyboardInputs(this));
 
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
+    }
+
+    private void loadAnimations() {
+        animations = new BufferedImage[9][6];
+
+        for (int j = 0; j < animations.length; j++) {
+            for (int i = 0; i < animations[j].length; i++) {
+                animations[j][i] = img.getSubimage(i * 64, j * 40, 64, 40);
+            }
+        }
+    }
+
+    private void importImage() {
+
+        try (InputStream is = getClass().getResourceAsStream("/player_sprites.png")) {
+            img = ImageIO.read(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setPanelSize() {
@@ -33,48 +62,53 @@ public class GamePanel extends JPanel {
         setMaximumSize(size);
     }
 
-    public void changeXDelta(int value) {
-        xDelta += value;
+    public void setDirection(int direction) {
+        this.playerDirection = direction;
+        moving = true;
     }
 
-    public void changeYDelta(int value) {
-        yDelta += value;
-    }
-
-    public void setRectPos(int x, int y) {
-        this.xDelta = x;
-        this.yDelta = y;
+    public void setMoving(boolean moving) {
+        this.moving = moving;
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        updateRectangle();
-        g.setColor(color);
+        updateAnimationTick();
 
-        g.fillRect((int) xDelta, (int) yDelta, 200, 50);
+        updatePosition();
+        setAnimation();
 
+        g.drawImage(animations[playerAction][animationIndex], (int) xDelta, (int) yDelta, 256, 160, null);
     }
 
-    private void updateRectangle() {
-        xDelta += xDir;
-        if (xDelta > 1200 || xDelta < 0) {
-            xDir *= -1;
-            color = getRandomColor();
-        }
-
-        yDelta += yDir;
-        if (yDelta > 800 || yDelta < 0) {
-            yDir *= -1;
-            color = getRandomColor();
+    private void updatePosition() {
+        if (moving) {
+            switch (playerDirection) {
+                case LEFT -> xDelta -= 5;
+                case UP -> yDelta -= 5;
+                case RIGHT -> xDelta += 5;
+                case DOWN -> yDelta += 5;
+            }
         }
     }
 
-    private Color getRandomColor() {
-        int r = random.nextInt(255);
-        int g = random.nextInt(255);
-        int b = random.nextInt(255);
+    private void setAnimation() {
+        if (moving) {
+            playerAction = RUNNING;
+        } else {
+            playerAction = IDLE;
+        }
+    }
 
-        return new Color(r, g, b);
+    private void updateAnimationTick() {
+        animationTick++;
+        if (animationTick >= animationSpeed) {
+            animationTick = 0;
+            animationIndex++;
+            if (animationIndex >= getSpriteAmount(playerAction)) {
+                animationIndex = 0;
+            }
+        }
     }
 }

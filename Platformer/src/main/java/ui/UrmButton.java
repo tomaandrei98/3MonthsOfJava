@@ -1,6 +1,5 @@
 package ui;
 
-import utils.Constants;
 import utils.LoadSave;
 
 import java.awt.*;

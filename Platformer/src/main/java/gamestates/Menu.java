@@ -11,13 +11,14 @@ import java.awt.image.BufferedImage;
 
 public class Menu extends State implements StateMethods {
     private MenuButton[] buttons = new MenuButton[3];
-    private BufferedImage backgroundImage;
+    private BufferedImage backgroundImage, backgroundImagePink;
     private int menuX, menuY, menuWidth, menuHeight;
 
     public Menu(Game game) {
         super(game);
         loadButtons();
         loadBackground();
+        backgroundImagePink = LoadSave.getSpriteAtlas(LoadSave.MENU_BACKGROUND_IMG);
     }
 
     private void loadBackground() {
@@ -44,6 +45,8 @@ public class Menu extends State implements StateMethods {
 
     @Override
     public void draw(Graphics g) {
+        g.drawImage(backgroundImagePink, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
+
         g.drawImage(backgroundImage, menuX, menuY, menuWidth, menuHeight, null);
 
         for (MenuButton menuButton : buttons) {

@@ -39,12 +39,12 @@ public class Player extends Entity {
         setAnimation();
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics g, int lvlOffset) {
         g.drawImage(animations[playerAction][animationIndex],
-                (int) (hitBox.x - xDrawOffset),
+                (int) (hitBox.x - xDrawOffset) - lvlOffset,
                 (int)  (hitBox.y - yDrawOffset),
                 width, height, null);
-        drawHitBox(g);
+//        drawHitBox(g);
     }
 
     private void updateAnimationTick() {
@@ -97,8 +97,10 @@ public class Player extends Entity {
             jump();
         }
 
-        if (!left && !right && !inAir) {
-            return;
+        if (!inAir) {
+            if ((!left && !right) || (left && right)) {
+                return;
+            }
         }
 
         float xSpeed = 0;

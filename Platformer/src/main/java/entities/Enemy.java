@@ -1,10 +1,17 @@
 package entities;
 
+import main.Game;
+
 import static utils.Constants.EnemyConstants.getSpriteAmount;
+import static utils.HelpMethods.*;
 
 public abstract class Enemy extends Entity {
     private int animationIndex, enemyState, enemyType;
     private int animationTick, animationSpeed = 25;
+    private boolean firstUpdate = true;
+    private boolean inAir = false;
+    private float fallSpeed;
+    private float gravity = 0.04f * Game.SCALE;
 
     public Enemy(float x, float y, int width, int height, int enemyType) {
         super(x, y, width, height);
@@ -23,8 +30,29 @@ public abstract class Enemy extends Entity {
         }
     }
 
-    public void update() {
+    public void update(int[][] lvlData) {
+        updateMove(lvlData);
         updateAnimationTick();
+    }
+
+    private void updateMove(int[][] lvlData) {
+        if (firstUpdate) {
+            if (!isEntityOnFloor(hitBox, lvlData)) {
+                inAir = true;
+            }
+        }
+
+        if (inAir) {
+            if (canMoveHere(hitBox.x, hitBox.y + fallSpeed, hitBox.width, hitBox.height, lvlData)) {
+                hitBox.y += fallSpeed;
+                fallSpeed += gravity;
+            } else {
+                inAir = false;
+                hitBox.y = getEntityYPosUnderRoofOrAboveFloor(hitBox, fallSpeed);
+            }
+        } else {
+
+        }
     }
 
     public int getAnimationIndex() {
